@@ -6,17 +6,19 @@
 
 L'objectif de note projet et de créer un système distribué basé sur les micro services permettant de gérer les factures des clients .
 
-voici l'archetecture de notre projet :
+voici l'architecture de notre projet :
  
-![image](https://user-images.githubusercontent.com/84719124/173114217-fbec351b-948a-473a-928e-e06efd5140e7.png)
+
+![image](https://user-images.githubusercontent.com/84719124/173137423-8cb049e5-cfeb-44ab-aff6-b904e8c36fcd.png)
 
 
-Dans ce projet on a creer 5 micro-service : 
+Dans ce projet on a créé 5 micro-service : 
 
 1-	Customer-Service : ce service permet de gérer les clients 
 On a commencé par créer la classe Customer où on a défini les attribut d’un customeer 
 On a ajouté l’annotation  ‘@Entity’ pour qu’il soit une entité jpa et on ajouté @Data pour définit les getters et les setters.
  
+![image](https://user-images.githubusercontent.com/84719124/173137475-7a08614a-805f-4fd2-8141-f22094c2073e.png)
 
 
 Puis l’interface CustomerRepository qui hérite de JpaRepository qui prend le nom de la table customer et son clé primaire et elle permet de faire des modifications sur la base de données.
