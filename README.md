@@ -112,25 +112,26 @@ products :
 
 customers :
 
-![image](https://user-images.githubusercontent.com/84719124/173115468-9e7f8e15-35d4-44a3-a5f4-2a1386dbc0a3.png)
 
+![image](https://user-images.githubusercontent.com/84719124/173115419-c88f8f35-89e3-4493-8742-2b967a2913c2.png)
  
 
 4-	Eureka-service : service d’enregistrement 
 Dans la classe principale on ajoute l’annotation @EnableEurekaServer
 
-![image](https://user-images.githubusercontent.com/84719124/173115419-c88f8f35-89e3-4493-8742-2b967a2913c2.png)
- 
 
+![image](https://user-images.githubusercontent.com/84719124/173115468-9e7f8e15-35d4-44a3-a5f4-2a1386dbc0a3.png)
+
+ 
 Exécution :
   
 ![image](https://user-images.githubusercontent.com/84719124/173115489-f9a78e43-a01e-48f9-a680-6018a40717fa.png)
 
 
-
 5-	Billing-service : qui permet de gérer les factures, ce service va se comminuqué avec le service customer et le inventery service pour qu’il puisse avoir les information des produits et des clients.
 Tout d’abord on a définit les classe qui ont relation avec la base de données :
 		Table bill :
+
  
  ![image](https://user-images.githubusercontent.com/84719124/173115534-6ae3f6b7-1137-4a8d-a076-6375da749cab.png)
 
@@ -142,21 +143,25 @@ Tout d’abord on a définit les classe qui ont relation avec la base de donnée
 Table ProductItem :
  
  ![image](https://user-images.githubusercontent.com/84719124/173115677-dd6e430f-f7f6-4d18-b00e-14e71ccefd70.png)
+ 
+ Puis on a défini 2 classes Product et Customer mais ils ne sont pas des entités jpa puisque leurs bases de données sont dans des autres micro services
 
 ![image](https://user-images.githubusercontent.com/84719124/173115736-548d048e-b351-48e3-a4d5-7f5c7f5ed0a3.png)
 
 
-
-Puis on a défini 2 classes Product et Customer mais ils ne sont pas des entités jpa puisque leurs bases de données sont dans des autres micro services
     
-![image](https://user-images.githubusercontent.com/84719124/173115760-deff3a0e-5870-4ba9-9a3b-99e8a606db88.png)   ![image](https://user-images.githubusercontent.com/84719124/173115819-155db001-7b8b-49c4-a060-387107992557.png)
- 
+![image](https://user-images.githubusercontent.com/84719124/173115760-deff3a0e-5870-4ba9-9a3b-99e8a606db88.png) 
 
  Après on a créé puis on a ajouté 2 interfaces avec l’annotation @FeignClient pour qu’il puisse récupérer les données du customer-service et de imventory-service 
+ 
+![image](https://user-images.githubusercontent.com/84719124/173115819-155db001-7b8b-49c4-a060-387107992557.png)
+ 
+
+
   
  ![image](https://user-images.githubusercontent.com/84719124/173115846-8f1862f5-f836-472c-82ae-9b2764527148.png)
 
-![image](https://user-images.githubusercontent.com/84719124/173115898-96e598e2-acf3-481a-9ceb-86e91cfe0f82.png)
+
 
 
 Et on a ajouté des données :
@@ -171,18 +176,22 @@ Table bill :
 
 
 Table productItem :
+
+![image](https://user-images.githubusercontent.com/84719124/173115898-96e598e2-acf3-481a-9ceb-86e91cfe0f82.png)
+ 
+ Puis on a crée un Rest Controller qui retourne les détails d’une facture :
+ 
  
 ![image](https://user-images.githubusercontent.com/84719124/173115929-26221727-b23a-422c-ac69-e049e6fd3ef4.png)
 
 
-Puis on a crée un Rest Controller qui retourne les détails d’une facture :
- 
+Résultat :  
+
+
 ![image](https://user-images.githubusercontent.com/84719124/173115973-3bb2e68d-3a51-4687-ab4e-028d2bec3bde.png)
 
 
-Résultat :  
 
-![Uploading image.png…]()
 
  
 
