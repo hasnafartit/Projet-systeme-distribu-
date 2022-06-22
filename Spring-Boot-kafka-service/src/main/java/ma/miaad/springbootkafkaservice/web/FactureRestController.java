@@ -32,7 +32,7 @@ public class FactureRestController {
 
     @GetMapping("/publish/{topic}")
     public Facture publish(@PathVariable String topic){
-        Facture facture= new Facture(null,Math.random()>0.5?"U1":"U2",new Random().nextInt(9000));
+        Facture facture= new Facture(null,Math.random()>0.5?"C1":"C2",new Random().nextInt(9000));
         streamBridge.send(topic,facture);
         return facture;
     }

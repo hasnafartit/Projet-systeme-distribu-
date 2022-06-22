@@ -14,6 +14,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -37,23 +40,44 @@ public class FactureService {
     @Bean
     public Consumer<Facture> factureConsumer(){
         return (input)->{
-            System.out.println("*********************");
             Facture facture=new Facture(null,input.getNomClient(),input.getMantant());
-            System.out.println(facture.toString());
             factureRepository.save(facture);
             System.out.println("**********************");
-        };
+            System.out.println("**********************");
 
+            PrintWriter pw = null;
+            try {
+                pw = new PrintWriter(new File("Factures.csv"));
+            } catch (
+                    FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            StringBuilder builder = new StringBuilder();
+            String ColumnNamesList = "Id,NameClient,Mantant";
+            builder.append(ColumnNamesList +"\n");
+            factureRepository.findAll().forEach(f ->{
+                builder.append(f.getId().toString()+",");
+                builder.append(f.getNomClient().toString()+",");
+                builder.append(f.getMantant());
+                builder.append('\n');
+                System.out.println(f.toString());
+                System.out.println("--------------------");
+            });
+            pw.write(builder.toString());
+            pw.close();
+        };
     }
 
+
+
     @Bean
-    public Function<KStream<String,Facture>
+    public  Function<KStream<String,Facture>
             ,KStream<String,Long>> kStreamFunction(){
         return (input)->{
             return input
-                    .filter((k,v)->v.getMantant()>60)
+
                     .map((k,v)->new KeyValue<>(v.getNomClient(),0L))
-                    .groupBy((k,v)->k, Grouped.with(Serdes.String(),Serdes.Long()))
+                    .groupBy((k,v)->k,Grouped.with(Serdes.String(),Serdes.Long()))
                     .windowedBy(TimeWindows.of(Duration.of(5, ChronoUnit.SECONDS)))
                     .count(Materialized.as("page-count"))
                     .toStream()
